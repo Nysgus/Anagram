@@ -85,20 +85,25 @@ public class TwoWordAnagramSolver {
 
 	// returns the lenth of each word
 	private static ArrayList<String> solveTwoWordAnagram(String anagram) {
+		String sortedAnagram = sortString(anagram);
+		ArrayList<String> twoWordAnagram = new ArrayList<String>();
 
 		Set<String> keys = map.keySet();
 		for (String keyOne : keys) {
-			int keyOneLength = keyOne.length();
 			for (String keyTwo : keys) {
-				int keyTwoLenth = keyTwo.length();
+				if ((keyTwo.length() + keyOne.length()) == anagram.length()) {
+					String twoWord = keyOne + keyTwo;
+					String sortedTwoWord = sortString(twoWord);
 
-				if ((keyTwoLenth + keyOneLength) == anagram.length()) {
-					System.out.println(keyOne + " " + keyTwo);
+					if (sortedTwoWord.equals(sortedAnagram)) {
+						twoWordAnagram.add(map.get(keyOne).toString());
+						
+					}
 				}
 			}
 		}
-
-		return null;
+		System.out.println(twoWordAnagram);
+		return twoWordAnagram;
 	}
 
 	// returns the arraylist mapped to the value of the sorted anagram string if
