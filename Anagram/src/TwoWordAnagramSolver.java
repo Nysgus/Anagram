@@ -12,10 +12,12 @@ public class TwoWordAnagramSolver {
 	private static String path = "wordlist.txt";
 	private static ArrayList<String> words;
 	private static ArrayList<String> results = new ArrayList<String>();
+	private static ArrayList<String> twoWordAnagram = new ArrayList<String>();
 	private static Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-
+	
 	public static void main(String[] args) {
 		System.out.println("please insert your Word: ");
+		long startTime = System.currentTimeMillis(); 
 		String inputWord = getInput();
 		inputWord = inputWord.substring(0, inputWord.length() - 2);
 
@@ -29,16 +31,30 @@ public class TwoWordAnagramSolver {
 
 		buildHashMap();
 		results = solveAnagram(inputWord);
-		solveTwoWordAnagram(inputWord);
+		twoWordAnagram = solveTwoWordAnagram(inputWord);
 
 		// if (!(results.isEmpty()) && !(results.contains(inputWord))) {
 		if (!(results.isEmpty())) {
+			System.out.println("Found Anagrams: ");
 			for (String s : results) {
 				System.out.println(s);
 			}
 		} else {
 			System.out.println("No words were found that match that anagram!");
 		}
+		if (!(twoWordAnagram.isEmpty())) {
+			System.out.println("Found TwoWordAnagrams: ");
+			for (String s : twoWordAnagram) {
+				System.out.println(s);
+			}
+		} else {
+			System.out
+					.println("No two words were found that match that anagram!");
+		}
+		
+		long endTime = System.currentTimeMillis();
+		long duration = endTime - startTime;
+		System.out.println("Time spent: " + duration);
 	}
 
 	// returns an ArrayList loaded with all the words from my wordlist
@@ -86,7 +102,6 @@ public class TwoWordAnagramSolver {
 	// returns the lenth of each word
 	private static ArrayList<String> solveTwoWordAnagram(String anagram) {
 		String sortedAnagram = sortString(anagram);
-		ArrayList<String> twoWordAnagram = new ArrayList<String>();
 
 		Set<String> keys = map.keySet();
 		for (String keyOne : keys) {
@@ -96,13 +111,13 @@ public class TwoWordAnagramSolver {
 					String sortedTwoWord = sortString(twoWord);
 
 					if (sortedTwoWord.equals(sortedAnagram)) {
-						twoWordAnagram.add(map.get(keyOne).toString());
-						
+						twoWordAnagram.add((map.get(keyOne).toString()) + "" + ((map.get(keyTwo).toString())));
+						System.out.println("Progress: " + twoWordAnagram);
+
 					}
 				}
 			}
 		}
-		System.out.println(twoWordAnagram);
 		return twoWordAnagram;
 	}
 
