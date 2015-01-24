@@ -29,12 +29,12 @@ public class TwoWordAnagramSolver {
 
 		buildHashMap();
 		results = solveAnagram(inputWord);
-		solveTwoWordAnagram(inputWord); 
+		solveTwoWordAnagram(inputWord);
 
-//		if (!(results.isEmpty()) && !(results.contains(inputWord))) {
+		// if (!(results.isEmpty()) && !(results.contains(inputWord))) {
 		if (!(results.isEmpty())) {
-				for (String s : results) {
-					System.out.println(s);
+			for (String s : results) {
+				System.out.println(s);
 			}
 		} else {
 			System.out.println("No words were found that match that anagram!");
@@ -54,7 +54,8 @@ public class TwoWordAnagramSolver {
 		return words;
 	}
 
-	// builds a hashmap of the words in the wordlist. Uses the sorted word as the key
+	// builds a hashmap of the words in the wordlist. Uses the sorted word as
+	// the key
 	private static void buildHashMap() {
 
 		for (String word : words) {
@@ -72,7 +73,8 @@ public class TwoWordAnagramSolver {
 		}
 	}
 
-	// sorts a string by its characters, the idea being an anagram sorts to the same string as the word it comes from
+	// sorts a string by its characters, the idea being an anagram sorts to the
+	// same string as the word it comes from
 	private static String sortString(String s) {
 
 		char[] c = s.toLowerCase().toCharArray();
@@ -80,35 +82,32 @@ public class TwoWordAnagramSolver {
 
 		return String.valueOf(c);
 	}
-	
-	// returns the lenth of each word 
-	private static ArrayList<String> solveTwoWordAnagram(String anagram){
-		
-		Set<String> keys = map.keySet(); 
-		for (String keyOne : keys){
-			int keyOneLength = keyOne.length(); 
-				for (String keyTwo : keys){	
-					int keyTwoLenth = keyTwo.length(); 
-					
-					if ((keyTwoLenth + keyOneLength) == anagram.length()){
-						System.out.println(keyOne + " " + keyTwo);  
-					}
+
+	// returns the lenth of each word
+	private static ArrayList<String> solveTwoWordAnagram(String anagram) {
+
+		Set<String> keys = map.keySet();
+		for (String keyOne : keys) {
+			int keyOneLength = keyOne.length();
+			for (String keyTwo : keys) {
+				int keyTwoLenth = keyTwo.length();
+
+				if ((keyTwoLenth + keyOneLength) == anagram.length()) {
+					System.out.println(keyOne + " " + keyTwo);
 				}
-				
-//			if (key.length() == anagram.length()) {
-//				System.out.println(key);
-//			}
+			}
 		}
-		
-		return null; 
+
+		return null;
 	}
 
-	// returns the arraylist mapped to the value of the sorted anagram string if it exists
+	// returns the arraylist mapped to the value of the sorted anagram string if
+	// it exists
 	private static ArrayList<String> solveAnagram(String anagram) {
 		String sortedAnagram = sortString(anagram);
 		if (map.containsKey(sortedAnagram)) {
 			return map.get(sortedAnagram);
-			
+
 		} else {
 			return new ArrayList<String>();
 		}
