@@ -14,10 +14,10 @@ public class TwoWordAnagramSolver {
 	private static ArrayList<String> results = new ArrayList<String>();
 	private static ArrayList<String> twoWordAnagram = new ArrayList<String>();
 	private static Map<String, ArrayList<String>> map = new HashMap<String, ArrayList<String>>();
-	
+
 	public static void main(String[] args) {
 		System.out.println("please insert your Word: ");
-		long startTime = System.currentTimeMillis(); 
+		long startTime = System.currentTimeMillis();
 		String inputWord = getInput();
 		inputWord = inputWord.substring(0, inputWord.length() - 2);
 
@@ -48,10 +48,9 @@ public class TwoWordAnagramSolver {
 				System.out.println(s);
 			}
 		} else {
-			System.out
-					.println("No two words were found that match that anagram!");
+			System.out.println("No two words were found that match that anagram!");
 		}
-		
+
 		long endTime = System.currentTimeMillis();
 		long duration = endTime - startTime;
 		System.out.println("Time spent: " + duration);
@@ -111,18 +110,15 @@ public class TwoWordAnagramSolver {
 					String sortedTwoWord = sortString(twoWord);
 
 					if (sortedTwoWord.equals(sortedAnagram)) {
-						twoWordAnagram.add((map.get(keyOne).toString()) + "" + ((map.get(keyTwo).toString())));
-						System.out.println("Progress: " + twoWordAnagram);
-
-					}
+						twoWordAnagram.add((map.get(keyOne)) + "" + ((map.get(keyTwo))));
+					} 
 				}
 			}
 		}
 		return twoWordAnagram;
 	}
 
-	// returns the arraylist mapped to the value of the sorted anagram string if
-	// it exists
+	// returns the arraylist mapped to the value of the sorted anagram string if it exists
 	private static ArrayList<String> solveAnagram(String anagram) {
 		String sortedAnagram = sortString(anagram);
 		if (map.containsKey(sortedAnagram)) {
@@ -131,7 +127,6 @@ public class TwoWordAnagramSolver {
 		} else {
 			return new ArrayList<String>();
 		}
-
 	}
 
 	// returns the input word
