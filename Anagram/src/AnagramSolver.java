@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class AnagramSolver {
-	private static BufferedReader br;
 	private static String path = "wordlist.txt";
 	private static ArrayList<String> words;
 	private static ArrayList<String> results = new ArrayList<String>();
@@ -19,8 +18,8 @@ public class AnagramSolver {
 		inputWord = inputWord.substring(0, inputWord.length() - 2);
 
 		try {
-			br = new BufferedReader(new FileReader(path));
-			words = buildWordlistFromFile();
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			words = buildWordlistFromFile(br);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("failed to load wordlist");
@@ -40,7 +39,7 @@ public class AnagramSolver {
 	}
 
 	// returns an ArrayList loaded with all the words from my wordlist
-	private static ArrayList<String> buildWordlistFromFile() throws IOException {
+	private static ArrayList<String> buildWordlistFromFile(BufferedReader br) throws IOException {
 
 		ArrayList<String> words = new ArrayList<String>();
 		String temp;

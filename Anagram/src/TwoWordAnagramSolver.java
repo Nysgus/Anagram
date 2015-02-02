@@ -8,7 +8,6 @@ import java.util.Map;
 import java.util.Set;
 
 public class TwoWordAnagramSolver {
-	private static BufferedReader br;
 	private static String path = "wordlist.txt";
 	private static ArrayList<String> words;
 	private static ArrayList<String> results = new ArrayList<String>();
@@ -22,8 +21,8 @@ public class TwoWordAnagramSolver {
 		inputWord = inputWord.substring(0, inputWord.length() - 2);
 
 		try {
-			br = new BufferedReader(new FileReader(path));
-			words = buildWordlistFromFile();
+			BufferedReader br = new BufferedReader(new FileReader(path));
+			words = buildWordlistFromFile(br);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("failed to load wordlist");
@@ -57,7 +56,7 @@ public class TwoWordAnagramSolver {
 	}
 
 	// returns an ArrayList loaded with all the words from my wordlist
-	private static ArrayList<String> buildWordlistFromFile() throws IOException {
+	private static ArrayList<String> buildWordlistFromFile(BufferedReader br) throws IOException {
 
 		ArrayList<String> words = new ArrayList<String>();
 		String temp;
@@ -98,17 +97,17 @@ public class TwoWordAnagramSolver {
 		return String.valueOf(c);
 	}
 
-	// returns the lenth of each word
+	// returns the arraylist of the two words which maps the anagram 
 	private static ArrayList<String> solveTwoWordAnagram(String anagram) {
 		String sortedAnagram = sortString(anagram);
-
+		
 		Set<String> keys = map.keySet();
+			
 		for (String keyOne : keys) {
 			for (String keyTwo : keys) {
 				if ((keyTwo.length() + keyOne.length()) == anagram.length()) {
 					String twoWord = keyOne + keyTwo;
 					String sortedTwoWord = sortString(twoWord);
-
 					if (sortedTwoWord.equals(sortedAnagram)) {
 						twoWordAnagram.add((map.get(keyOne)) + "" + ((map.get(keyTwo))));
 					} 
