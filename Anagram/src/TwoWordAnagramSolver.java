@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ public class TwoWordAnagramSolver {
 
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(path));
-			words = buildWordlistFromFile(br);
+			words = buildWordlistFromFile(br, inputWord);
 		} catch (IOException e) {
 			e.printStackTrace();
 			System.out.println("failed to load wordlist");
@@ -56,16 +57,44 @@ public class TwoWordAnagramSolver {
 	}
 
 	// returns an ArrayList loaded with all the words from my wordlist
-	private static ArrayList<String> buildWordlistFromFile(BufferedReader br) throws IOException {
+	private static ArrayList<String> buildWordlistFromFile(BufferedReader br, String inputWord) throws IOException {
 
 		ArrayList<String> words = new ArrayList<String>();
 		String temp;
 
 		while ((temp = br.readLine()) != null) {
-			words.add(temp);
+			if (contains(temp.toCharArray(), inputWord.replaceAll("\\s", "").toLowerCase().toCharArray())) {
+				words.add(temp);
+			}
 		}
 
 		return words;
+	}
+
+	private static boolean contains(char[] charArray1, char[] charArray2) {
+		if (charArray1.length > charArray2.length) {
+			return false;
+		}
+		List<Character> charList1 = toList(charArray1);
+		List<Character> charList2 = toList(charArray2);
+
+		for (Character charValue : charList1) {
+			if (charList2.contains(charValue)) {
+				charList2.remove(charValue);
+			} else {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private static List<Character> toList(char[] charArr) {
+		assert charArr != null;
+		List<Character> charList = new ArrayList<Character>();
+		for (char ch : charArr) {
+			charList.add(ch);
+		}
+		return charList;
 	}
 
 	// builds a hashmap of the words in the wordlist. Uses the sorted word as
@@ -97,27 +126,30 @@ public class TwoWordAnagramSolver {
 		return String.valueOf(c);
 	}
 
-	// returns the arraylist of the two words which maps the anagram 
+	// returns the arraylist of the two words which maps the anagram
 	private static ArrayList<String> solveTwoWordAnagram(String anagram) {
+
 		String sortedAnagram = sortString(anagram);
-		
+
 		Set<String> keys = map.keySet();
-			
+
 		for (String keyOne : keys) {
 			for (String keyTwo : keys) {
 				if ((keyTwo.length() + keyOne.length()) == anagram.length()) {
 					String twoWord = keyOne + keyTwo;
 					String sortedTwoWord = sortString(twoWord);
 					if (sortedTwoWord.equals(sortedAnagram)) {
-						twoWordAnagram.add((map.get(keyOne)) + "" + ((map.get(keyTwo))));
-					} 
+						twoWordAnagram.add((map.get(keyOne)) + " " + ((map.get(keyTwo))));
+					}
 				}
 			}
 		}
+		System.out.println("twoword" + twoWordAnagram.size());
 		return twoWordAnagram;
 	}
 
-	// returns the arraylist mapped to the value of the sorted anagram string if it exists
+	// returns the arraylist mapped to the value of the sorted anagram string if
+	// it exists
 	private static ArrayList<String> solveAnagram(String anagram) {
 		String sortedAnagram = sortString(anagram);
 		if (map.containsKey(sortedAnagram)) {
